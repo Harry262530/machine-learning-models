@@ -1,0 +1,77 @@
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.ensemble import RandomForestRegressor, AdaBoostRegressor, BaggingRegressor, HistGradientBoostingRegressor
+from sklearn.naive_bayes import GaussianNB
+
+!pip install catboost
+
+from catboost import CatBoostRegressor
+
+rf_regressor = RandomForestRegressor(n_estimators=1000, random_state=42)
+rf_regressor.fit(x_train, y_train)
+rf_pred = rf_regressor.predict(x_test)
+
+# Evaluate the RandomForestRegressor
+mse_rf = mean_squared_error(y_test, rf_pred)
+r2_rf = r2_score(y_test, rf_pred)
+print("Random Forest - Mean Squared Error: {}".format(mse_rf))
+print("Random Forest - R-squared: {}".format(r2_rf))
+print()
+
+# AdaBoostRegressor
+abc_regressor = AdaBoostRegressor()
+abc_regressor.fit(x_train, y_train)
+abc_pred = abc_regressor.predict(x_test)
+
+# Evaluate the AdaBoostRegressor
+mse_abc = mean_squared_error(y_test, abc_pred)
+r2_abc = r2_score(y_test, abc_pred)
+print("AdaBoost - Mean Squared Error: {}".format(mse_abc))
+print("AdaBoost - R-squared: {}".format(r2_abc))
+print()
+
+# BaggingRegressor
+bag_regressor = BaggingRegressor()
+bag_regressor.fit(x_train, y_train)
+bag_pred = bag_regressor.predict(x_test)
+
+# Evaluate the BaggingRegressor
+mse_bag = mean_squared_error(y_test, bag_pred)
+r2_bag = r2_score(y_test, bag_pred)
+print("Bagging - Mean Squared Error: {}".format(mse_bag))
+print("Bagging - R-squared: {}".format(r2_bag))
+print()
+
+# HistGradientBoostingRegressor
+hgbc_regressor = HistGradientBoostingRegressor()
+hgbc_regressor.fit(x_train, y_train)
+hgbc_pred = hgbc_regressor.predict(x_test)
+
+# Evaluate the HistGradientBoostingRegressor
+mse_hgbc = mean_squared_error(y_test, hgbc_pred)
+r2_hgbc = r2_score(y_test, hgbc_pred)
+print("Hist Gradient Boosting - Mean Squared Error: {}".format(mse_hgbc))
+print("Hist Gradient Boosting - R-squared: {}".format(r2_hgbc))
+print()
+
+# GaussianNB (as a naive baseline for regression)
+gnb_regressor = GaussianNB()
+gnb_regressor.fit(x_train, y_train)
+gnb_pred = gnb_regressor.predict(x_test)
+
+# Evaluate the GaussianNB
+mse_gnb = mean_squared_error(y_test, gnb_pred)
+r2_gnb = r2_score(y_test, gnb_pred)
+print("GaussianNB - Mean Squared Error: {}".format(mse_gnb))
+print("GaussianNB - R-squared: {}".format(r2_gnb))
+print()
+
+# CatBoostRegressor
+cbc_regressor = CatBoostRegressor(silent=True, depth=6, iterations=500)
+cbc_regressor.fit(x_train, y_train)
+cbc_pred = cbc_regressor.predict(x_test)
+
+# Evaluate the CatBoostRegressor
+mse_cbc = mean_squared_error(y_test, cbc_pred)
+r2_cbc = r2_score(y_test, cbc_pred)
+print("CatBoost - Mean Squared Error: {}".format(mse_cbc))
+print("CatBoost - R-squared: {}".format(r2_cbc))
